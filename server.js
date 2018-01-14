@@ -8,6 +8,10 @@ app.listen(process.env.PORT || 8080, function () {
 });
 
 
-app.get('/', (req, res) {
-  res.send('Home.');
+// app.get('/', (req, res) => {
+//
+// });
+
+app.get('/json', (req, res) => {
+  res.json({word: 'json'});
 });
