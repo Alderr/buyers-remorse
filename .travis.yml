@@ -1,7 +1,3 @@
 language: node_js
 node_js: node
-deploy:
-provider: heroku
-app: buyers_remorse
-  on:
-    repo: https://github.com/Alderr/buyers-remorse
+repo: https://github.com/Alderr/buyers-remorse
