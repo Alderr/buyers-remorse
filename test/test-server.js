@@ -9,11 +9,11 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('index page', function () {
-  it('should exist', function () {
-    return chai.request(app)
-      .get('/')
-      .then(function (res) {
-        res.should.have.status(200);
-      });
-  });
+    it('should exist', function () {
+        return chai.request(app)
+            .get('/')
+            .then(function (res) {
+                res.should.have.status(200);
+            });
+    });
 });
