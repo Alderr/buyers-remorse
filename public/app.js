@@ -12,7 +12,8 @@ const coins = {
 let store = {
     page: true,
     feedback: null,
-    currentCoin: null
+    currentCoin: null,
+    coinArray: null
 };
 
 function hideAll() {
@@ -35,17 +36,21 @@ render();
 
 $('#coin').click(function(event) {
     if (event.target.value === 'BTC') {
-        store.currentCoin = coins.bitcoin
+        store.currentCoin = 'BTC';
+        store.coinArray = coins.bitcoin;
     } else if (event.target.value === 'BCH') {
-        store.currentCoin = coins.bitcoinCash
+        store.currentCoin = 'BCH';
+        store.coinArray = coins.bitcoinCash;
     } else if (event.target.value === 'ETH') {
-        store.currentCoin = coins.Ethereum
+        store.currentCoin = 'ETH';
+        store.coinArray = coins.Ethereum;
     } else if (event.target.value === 'XRP') {
-        store.currentCoin = coins.Ripple
+        store.currentCoin = 'XRP';
+        store.coinArray = coins.Ripple;
     }
-    $('#select').html(`<option value="option1">${store.currentCoin[0]}</option>
-    <option value="option2">${store.currentCoin[1]}</option>
-    <option value="option3">${store.currentCoin[2]}</option>`);
+    $('#select').html(`<option value="option1">${store.coinArray[0]}</option>
+    <option value="option2">${store.coinArray[1]}</option>
+    <option value="option3">${store.coinArray[2]}</option>`);
 
 });
 
@@ -53,9 +58,11 @@ function success1(data){
     console.log(data)
 }
 
+// moment(store.coinArray).fromNow().format('YYYY_MM_DD');
+
 $('.submit').click(() => {
     $.getJSON(
-    'https://dog.ceo/api/breeds/list/all',success1
+    `https://remorse.glitch.me/v1/profit?investmentAmount=100&coinName=${store.currentCoin}&date=2017_02_13`,success1
       );
   store.page = !store.page;
   render();
