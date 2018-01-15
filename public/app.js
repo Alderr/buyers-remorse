@@ -34,13 +34,13 @@ function render() {
 render();
 
 $('#coin').click(function(event) {
-    if (event.target.value === 'btc') {
+    if (event.target.value === 'BTC') {
         store.currentCoin = coins.bitcoin
-    } else if (event.target.value === 'bch') {
+    } else if (event.target.value === 'BCH') {
         store.currentCoin = coins.bitcoinCash
-    } else if (event.target.value === 'eth') {
+    } else if (event.target.value === 'ETH') {
         store.currentCoin = coins.Ethereum
-    } else if (event.target.value === 'xrp') {
+    } else if (event.target.value === 'XRP') {
         store.currentCoin = coins.Ripple
     }
     $('#select').html(`<option value="option1">${store.currentCoin[0]}</option>
@@ -49,7 +49,16 @@ $('#coin').click(function(event) {
 
 });
 
+function success1(data){
+    console.log(data)
+}
+
 $('.submit').click(() => {
+    $.ajax({
+        dataType: 'json',
+        url: 'https://remorse.glitch.me/coinNames',
+        success: success1
+      });
   store.page = !store.page;
   render();
 })
