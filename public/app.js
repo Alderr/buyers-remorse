@@ -55,7 +55,7 @@ function success1(data){
 
 $('.submit').click(() => {
     $.getJSON(
-    'https://remorse.glitch.me/coinNames',success1
+    'https://dog.ceo/api/breeds/list/all',success1
       );
   store.page = !store.page;
   render();
