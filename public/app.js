@@ -54,11 +54,9 @@ function success1(data){
 }
 
 $('.submit').click(() => {
-    $.ajax({
-        dataType: 'json',
-        url: 'https://remorse.glitch.me/coinNames',
-        success: success1
-      });
+    $.getJSON(
+    'https://remorse.glitch.me/coinNames',success1
+      );
   store.page = !store.page;
   render();
 })
