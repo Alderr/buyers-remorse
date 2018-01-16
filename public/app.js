@@ -10,7 +10,7 @@ const coins = {
 }
 
 let store = {
-    page: true,
+    page: 'start',
     feedback: null,
     currentCoin: null,
     coinArray: null
@@ -23,18 +23,31 @@ function hideAll() {
 
 function render() {
     hideAll();
-    if (store.page === true) {
-        $('.begin').show();
+    if (store.page === 'start') {
+        $('.start').show();
+        $('.begin').hide();
         $('.results').hide();
-
-    } else if (store.page === false) {
+        $('.form').hide();
+    } else if (store.page === 'begin') {
+        $('.start').hide();
+        $('.results').hide();
+        $('.begin').show();
+        $('.form').hide();
+    } else if (store.page === 'form') {
+        $('.start').hide();
+        $('.results').hide();
+        $('.begin').hide();
+        $('.form').show();
+    } else if (store.page === 'results') {
+        $('.start').hide();
         $('.results').show();
         $('.begin').hide();
+        $('.form').hide();
     }
 }
 render();
 
-$('#coin').click(function(event) {
+$('#coin').click(function (event) {
     if (event.target.value === 'BTC') {
         store.currentCoin = 'BTC';
         store.coinArray = coins.bitcoin;
@@ -54,7 +67,7 @@ $('#coin').click(function(event) {
 
 });
 
-function success1(data){
+function success1(data) {
     console.log(data)
 }
 
@@ -62,8 +75,17 @@ function success1(data){
 
 $('.submit').click(() => {
     $.getJSON(
-    `https://remorse.glitch.me/v1/profit?investmentAmount=100&coinName=${store.currentCoin}&date=2017_02_13`,success1
-      );
-  store.page = !store.page;
-  render();
+        `https://remorse.glitch.me/v1/profit?investmentAmount=100&coinName=${store.currentCoin}&date=2017_02_13`, success1
+    )
+    if (store.page === 'start') {
+        store.page = 'begin'
+    } else if (store.page === 'begin') {
+        store.page = 'form'
+    } else if (store.page === 'form') {
+        console.log(store.page)
+        store.page = 'results'
+    } else if (store.page === 'results') {
+        store.page = 'start';
+    }
+    render();
 })
