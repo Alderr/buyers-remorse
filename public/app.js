@@ -1,20 +1,19 @@
-const TOP_LEVEL_COMPONENTS = [
-    '.begin', '.results'
-];
+'use strict'
 
-const coins = {
-    bitcoin: ['8 Years ago', '4 Years ago', 'Last Year'],
-    bitcoinCash: ['5 Months ago', '2 Months ago', 'Yesterday'],
-    Ethereum: ['2 Years ago', '1 Year ago', '6 Months ago'],
-    Ripple: ['5 Years ago', '3 Years ago', '1 Year ago']
-}
+// let request = new Request();
+
+
+const TOP_LEVEL_COMPONENTS = [
+    '.coin', '.results', '.form', '.start'
+];
 
 let store = {
     page: 'start',
     feedback: null,
     currentCoin: null,
-    coinArray: null
+    coinDate: null
 };
+
 
 function hideAll() {
     TOP_LEVEL_COMPONENTS.forEach(component =>
@@ -25,67 +24,102 @@ function render() {
     hideAll();
     if (store.page === 'start') {
         $('.start').show();
-        $('.begin').hide();
+        $('.coin').hide();
         $('.results').hide();
         $('.form').hide();
-    } else if (store.page === 'begin') {
+    } else if (store.page === 'coin') {
         $('.start').hide();
         $('.results').hide();
-        $('.begin').show();
+        $('.coin').show();
         $('.form').hide();
     } else if (store.page === 'form') {
         $('.start').hide();
         $('.results').hide();
-        $('.begin').hide();
+        $('.coin').hide();
         $('.form').show();
     } else if (store.page === 'results') {
         $('.start').hide();
         $('.results').show();
-        $('.begin').hide();
+        $('.coin').hide();
         $('.form').hide();
     }
 }
 render();
 
-$('#coin').click(function (event) {
-    if (event.target.value === 'BTC') {
+$('.coin').on('click', 'div', function (event) {
+    if (event.target.attributes.name.nodeValue === 'BTC') {
+        console.log('Hey');
         store.currentCoin = 'BTC';
-        store.coinArray = coins.bitcoin;
-    } else if (event.target.value === 'BCH') {
+        store.coinDate = "2009-01-09";
+    } else if (event.target.attributes.name.nodeValue === 'BCH') {
         store.currentCoin = 'BCH';
-        store.coinArray = coins.bitcoinCash;
-    } else if (event.target.value === 'ETH') {
+        store.coinDate = "2017-08-01";
+    } else if (event.target.attributes.name.nodeValue === 'ETH') {
         store.currentCoin = 'ETH';
-        store.coinArray = coins.Ethereum;
-    } else if (event.target.value === 'XRP') {
+        store.coinDate = "2015-07-30";
+    } else if (event.target.attributes.name.nodeValue === 'XRP') {
         store.currentCoin = 'XRP';
-        store.coinArray = coins.Ripple;
+        store.coinDate = "2017-04-14";
     }
-    $('#select').html(`<option value="option1">${store.coinArray[0]}</option>
-    <option value="option2">${store.coinArray[1]}</option>
-    <option value="option3">${store.coinArray[2]}</option>`);
-
 });
 
-function success1(data) {
-    console.log(data)
-}
-
-// moment(store.coinArray).fromNow().format('YYYY_MM_DD');
-
-$('.submit').click(() => {
-    $.getJSON(
-        `https://remorse.glitch.me/v1/profit?investmentAmount=100&coinName=${store.currentCoin}&date=2017_02_13`, success1
-    )
+$('body').on('click', '.submit', (event) => {
+    // event.preventDefault();
+    console.log(store.page)
     if (store.page === 'start') {
-        store.page = 'begin'
-    } else if (store.page === 'begin') {
-        store.page = 'form'
-    } else if (store.page === 'form') {
-        console.log(store.page)
-        store.page = 'results'
+        store.page = 'coin';
+    } else if (store.page === 'coin') {
+        console.log(store.coinDate);
+        store.page = 'form';
+        $('.form').html(`<form>
+            Initial Investment:<br>
+            <input type="number" name="investmentAmount" required placeholder="Exchange"><br>
+            Value at time of purchase:<br>
+            <input type="number" min="0" name="Buy Price" required placeholder="Buy Price"><br>
+            Date:<br>
+            <input type="date" name="date" min= ${store.coinDate} required><br>
+            <br>
+            <input class ="submit" type="submit" value="Send Me!">
+            </form> `);    
     } else if (store.page === 'results') {
         store.page = 'start';
     }
     render();
 })
+
+$(".form").submit(function (event) {
+
+    // Stop form from submitting normally
+    event.preventDefault();
+    store.page = 'results';
+    // Get some values from elements on the page:
+    let $form = $(this),
+        amt = $form.find("input[name='investmentAmount']").val(),
+        bought = $form.find("input[name='Buy Price']").val(),
+        date = $form.find("input[name='date']").val(),
+        url = 'https://remorse.glitch.me/v3/investment';
+    
+        console.log(date);
+
+    // Send the data using post
+    let posting = $.post(url, {
+        "coinName": store.currentCoin, 
+        "investmentAmount": amt, 
+        "date" : date, 
+        "previousValue": bought
+        // investmentAmount: amt
+    });
+
+    let gettingIt = $.getJSON(url, {
+
+    });
+
+    
+    // Put the results in a div
+    posting.done(function (data) {
+        console.log(data);
+        let content = $(data).find("#content");
+        $(".results").append(content);
+    });
+    render();
+});
