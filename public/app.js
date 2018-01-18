@@ -86,6 +86,7 @@ $('body').on('click', '#homepage', (apiGet) => {
 });
 
 $('body').on('click', '#delete', (apiDelete) => {
+
     var row = $(apiDelete.currentTarget).closest('div');
 
     let value = apiDelete.currentTarget.value.split(' ');
@@ -155,7 +156,7 @@ $('.form').submit(function (event) {
         amt = $form.find('input[name=\'investmentAmount\']').val(),
         bought = $form.find('input[name=\'Buy Price\']').val(),
         date = $form.find('input[name=\'date\']').val(),
-        postUrl = 'https://remorse.glitch.me/v3/investment';
+        postUrl = 'https://remorse.glitch.me/v3/investments';
 
     let posting = $.post(postUrl, {
         'coinName': store.currentCoin,
