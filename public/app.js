@@ -68,7 +68,7 @@ $('.coin').on('click', 'div', function (event) {
         store.coinDate = '2015-07-30';
     } else if (event.target.attributes.name.nodeValue === 'XRP') {
         console.log('XRP');
-        store.currentCoin = 'XRP';
+          store.currentCoin = 'XRP';
         store.coinDate = '2017-04-14';
     }
 });
