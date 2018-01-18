@@ -207,7 +207,7 @@ $('.form').submit(function (event) {
     //& pressed homepage
     let getUrl = 'https://remorse.glitch.me/v3/investments';
     let getting = $.getJSON(getUrl, (data) => {
-        console.log(data);
+        store.investments = data;
     });
 
     getting.done(function (data) {
