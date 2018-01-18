@@ -42,26 +42,44 @@ function render() {
     }
 
     else if (store.page === 'homepage') {
-        $('.start').hide();
-        $('.homepage').show();
-        $('.coin').hide();
-        $('.form').hide();
+        let getUrl = 'https://remorse.glitch.me/v3/investments';
+
+        let getting = $.getJSON(getUrl, (data) => {
+            console.log(data);
+            store.investments = data;
+
+            const filteredInvestments = store.investments.filter(investment => investment.coinName === store.selectedCoin);
+            console.log(store.selectedCoin);
+            if(store.selectedCoin === '' || store.selectedCoin === null) {
+                console.log('selectedCoin is empty');
+                $('.results').html(divCreator(store.investments));
+            }
+
+            else {
+                $('.results').html(divCreator(filteredInvestments));
+            }
+
+            $('.start').hide();
+            $('.homepage').show();
+            $('.coin').hide();
+            $('.form').hide();
+
+        });
+
+
     }
 
 
 }
 
-$('.homepage').on('click', 'select', function(event){
+$('.homepage').on('change', function(event){
 
-    console.log('homepage!!!!');
+    console.log('change event triggered!') ;
 
-    store.selectedCoin = event.currentTarget.value;
-    const filteredInvestments = store.investments.filter(investment => investment.coinName === store.selectedCoin);
-    if(store.selectedCoin === ''){
-        $('.results').html(divCreator(store.investments));
-    }else{
-        $('.results').html(divCreator(filteredInvestments));
-    }
+    store.page = 'homepage';
+    store.selectedCoin = event.target.value;
+    console.log(store.selectedCoin);
+    render();
 });
 
 function divCreator(data) {
@@ -104,18 +122,12 @@ $('.coin').on('click', 'div', function (event) {
         store.currentCoin = 'XRP';
         store.coinDate = '2017-04-14';
     }
+
 });
 
 $('body').on('click', '#homepage', (apiGet) => {
     console.log('home page button!');
     store.page = 'homepage';
-    let getUrl = 'https://remorse.glitch.me/v3/investments';
-    let getting = $.getJSON(getUrl, (data) => {
-        console.log(data);
-        store.investments = data;
-        $('.results').html(divCreator(store.investments));
-    });
-
     render();
 });
 
@@ -302,14 +314,18 @@ $('.form').submit(function (event) {
 
     }
 
-    //render();
+    render();
     //when user added investments; they didnt see them on the screen till they went Back
     //& pressed homepage
-    let getUrl = 'https://remorse.glitch.me/v3/investments';
-    let getting = $.getJSON(getUrl, (data) => {
-        store.investments = data;
-    });
+    // let getUrl = 'https://remorse.glitch.me/v3/investments';
+    // let getting = $.getJSON(getUrl, (data) => {
+    //     store.investments = data;
+    // });
 
+    // getting.done(function (data) {
+    //     $('.homepage').html(divCreator(data));
+    //     render();
+    // });
 
 
 });
