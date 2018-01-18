@@ -51,8 +51,10 @@ function render() {
 
 }
 
-$('.homepage').on('click', 'option', function(event){
-    console.log('homepage!');
+$('.homepage').on('click', 'select', function(event){
+
+    console.log('homepage!!!!');
+
     store.selectedCoin = event.currentTarget.value;
     const filteredInvestments = store.investments.filter(investment => investment.coinName === store.selectedCoin);
     if(store.selectedCoin === ''){
@@ -63,7 +65,7 @@ $('.homepage').on('click', 'option', function(event){
 });
 
 function divCreator(data) {
-
+    console.log('divCreator!!');
     let div = '';
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
@@ -71,6 +73,7 @@ function divCreator(data) {
         div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
 
     }
+
     return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div;
 }
 
@@ -82,15 +85,21 @@ $('.coin').on('click', 'div', function (event) {
         console.log('BTC');
         store.currentCoin = 'BTC';
         store.coinDate = '2009-01-09';
-    } else if (event.target.attributes.name.nodeValue === 'BCH') {
+    }
+
+    else if (event.target.attributes.name.nodeValue === 'BCH') {
         console.log('BCH');
         store.currentCoin = 'BCH';
         store.coinDate = '2017-08-01';
-    } else if (event.target.attributes.name.nodeValue === 'ETH') {
+    }
+
+    else if (event.target.attributes.name.nodeValue === 'ETH') {
         console.log('ETH');
         store.currentCoin = 'ETH';
         store.coinDate = '2015-07-30';
-    } else if (event.target.attributes.name.nodeValue === 'XRP') {
+    }
+
+    else if (event.target.attributes.name.nodeValue === 'XRP') {
         console.log('XRP');
         store.currentCoin = 'XRP';
         store.coinDate = '2017-04-14';
@@ -98,15 +107,15 @@ $('.coin').on('click', 'div', function (event) {
 });
 
 $('body').on('click', '#homepage', (apiGet) => {
+    console.log('home page button!');
     store.page = 'homepage';
     let getUrl = 'https://remorse.glitch.me/v3/investments';
     let getting = $.getJSON(getUrl, (data) => {
         console.log(data);
-    });
-    getting.done(function (data) {
         store.investments = data;
-        // $('.homepage').html(divCreator(data));
+        $('.results').html(divCreator(store.investments));
     });
+
     render();
 });
 
@@ -133,7 +142,7 @@ $('body').on('click', '#delete', (apiDelete) => {
 });
 
 $('body').on('click', '#update', (apiUpdate) => {
-
+    console.log('clicked updated button');
     var row = $(apiUpdate.currentTarget).closest('div');
 
     let value = apiUpdate.currentTarget.value.split(' ');
@@ -273,15 +282,15 @@ $('.form').submit(function (event) {
         updating.done(function (data) {
             console.log(data);
 
-            let getUrl = 'https://remorse.glitch.me/v3/investments';
-            let getting = $.getJSON(getUrl, (data) => {
-                console.log(data);
-            });
-
-            getting.done(function (data) {
-                $('.homepage').html(divCreator(data));
-                render();
-            });
+            // let getUrl = 'https://remorse.glitch.me/v3/investments';
+            // let getting = $.getJSON(getUrl, (data) => {
+            //     console.log(data);
+            // });
+            //
+            // getting.done(function (data) {
+            //     $('.homepage').html(divCreator(data));
+            //     render();
+            // });
 
         });
 
@@ -296,6 +305,10 @@ $('.form').submit(function (event) {
     //render();
     //when user added investments; they didnt see them on the screen till they went Back
     //& pressed homepage
+    let getUrl = 'https://remorse.glitch.me/v3/investments';
+    let getting = $.getJSON(getUrl, (data) => {
+        store.investments = data;
+    });
 
 
 
