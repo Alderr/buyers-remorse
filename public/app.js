@@ -11,7 +11,7 @@ let store = {
     page: 'start',
     feedback: null,
     currentCoin: null,
-    coinDate: null
+    coinDate: null,
 };
 
 
@@ -46,6 +46,15 @@ function render() {
 }
 render();
 
+function divCreator(data) {
+    let div = '';
+    for (let i = 0; i < data.length; i++) {
+        let item = data[i];
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.id}">delete</button></div>`;
+    }
+    return div + '<br><button class="submit">Go Back</button>';
+}
+
 $('.coin').on('click', 'div', function (event) {
     if (event.target.attributes.name.nodeValue === 'BTC') {
         console.log('BTC');
@@ -78,6 +87,12 @@ $('body').on('click', '#homepage', (event) => {
     render();
 });
 
+$('body').on('click', '#delete', (event) => {
+    let value = event.currentTarget.value;
+    console.log(value);
+    let deleteUrl = `https://remorse.glitch.me/v3/investments/${value}`;
+    render();
+})
 $('body').on('click', '.submit', (event) => {
     // event.preventDefault();
     console.log(store.page)
@@ -102,15 +117,6 @@ $('body').on('click', '.submit', (event) => {
     render();
 });
 
-function divCreator(data) {
-    let div = '';
-    for (let i = 0; i < data.length; i++) {
-        let item = data[i];
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date} </div>`;
-    }
-    return div + '<br><button class="submit">Go Back</button>';
-}
-
 $(".form").submit(function (event) {
 
     // Stop form from submitting normally
@@ -123,27 +129,16 @@ $(".form").submit(function (event) {
         date = $form.find("input[name='date']").val(),
         postUrl = 'https://remorse.glitch.me/v3/investment';
 
-    // Send the data using post
-    // let getting = $.getJSON(getUrl, (data) => {
-    //     console.log(data)
-    // });
-
     // let posting = $.post(postUrl, {
     //     "coinName": store.currentCoin,
     //     "investmentAmount": amt,
     //     "date": date,
     //     "previousValue": bought
-
     // });
 
-    // getting.done(function (data) {
-    //     $(".homepage").html(divCreator(data));
-    // });
     // Put the homepage in a div
     // posting.done(function (data) {
     //     console.log(data);
-    //     // let content = $(data).find("#content");
-    //     // $(".homepage").append(content);
     // });
     render();
 });
