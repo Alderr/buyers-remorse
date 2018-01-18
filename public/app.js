@@ -1,8 +1,5 @@
 'use strict';
 
-// let request = new Request();
-
-
 const TOP_LEVEL_COMPONENTS = [
     '.coin', '.homepage', '.form', '.start'
 ];
@@ -13,7 +10,6 @@ let store = {
     currentCoin: null,
     coinDate: null,
 };
-
 
 function hideAll() {
     TOP_LEVEL_COMPONENTS.forEach(component =>
@@ -101,13 +97,13 @@ $('body').on('click', '#delete', (apiDelete) => {
     $.ajax({
         url: deleteUrl,
         type: 'DELETE',
-        success: function(result) {
-        alert('This entry has been deleted');
-        row.remove();
-        render();
+        success: function (result) {
+            alert('This entry has been deleted');
+            row.remove();
+            render();
         }
     });
-    
+
 })
 
 $('body').on('click', '#deleteAll', (apiDeleteall) => {
@@ -116,14 +112,14 @@ $('body').on('click', '#deleteAll', (apiDeleteall) => {
     $.ajax({
         url: deleteUrl,
         type: 'DELETE',
-        success: function(result) {
-        alert('All entries have been deleted');
-        $( ".homepage" ).empty();
-        store.page='start'
-        render();
+        success: function (result) {
+            alert('All entries have been deleted');
+            $(".homepage").empty();
+            store.page = 'start'
+            render();
         }
     });
-    
+
 })
 
 $('body').on('click', '.submit', (event) => {
