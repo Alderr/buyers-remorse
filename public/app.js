@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // let request = new Request();
 
@@ -18,7 +18,7 @@ let store = {
 function hideAll() {
     TOP_LEVEL_COMPONENTS.forEach(component =>
         $(`${component}`).hide());
-};
+}
 
 function render() {
     hideAll();
@@ -50,7 +50,9 @@ function divCreator(data) {
     let div = '';
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
+
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.coinName} ${item.id}">delete</button></div> <button id="update" value="${item.coinName} ${item.id}">update</button></div>`;
+
     }
     return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div + '<br><button class="submit">Go Back</button>';
 }
@@ -59,19 +61,19 @@ $('.coin').on('click', 'div', function (event) {
     if (event.target.attributes.name.nodeValue === 'BTC') {
         console.log('BTC');
         store.currentCoin = 'BTC';
-        store.coinDate = "2009-01-09";
+        store.coinDate = '2009-01-09';
     } else if (event.target.attributes.name.nodeValue === 'BCH') {
         console.log('BCH');
         store.currentCoin = 'BCH';
-        store.coinDate = "2017-08-01";
+        store.coinDate = '2017-08-01';
     } else if (event.target.attributes.name.nodeValue === 'ETH') {
         console.log('ETH');
         store.currentCoin = 'ETH';
-        store.coinDate = "2015-07-30";
+        store.coinDate = '2015-07-30';
     } else if (event.target.attributes.name.nodeValue === 'XRP') {
         console.log('XRP');
         store.currentCoin = 'XRP';
-        store.coinDate = "2017-04-14";
+        store.coinDate = '2017-04-14';
     }
 });
 
@@ -79,10 +81,10 @@ $('body').on('click', '#homepage', (apiGet) => {
     store.page = 'homepage';
     let getUrl = 'https://remorse.glitch.me/v3/investments';
     let getting = $.getJSON(getUrl, (data) => {
-        console.log(data)
+        console.log(data);
     });
     getting.done(function (data) {
-        $(".homepage").html(divCreator(data));
+        $('.homepage').html(divCreator(data));
     });
     render();
 });
@@ -126,7 +128,7 @@ $('body').on('click', '#deleteAll', (apiDeleteall) => {
 
 $('body').on('click', '.submit', (event) => {
     // event.preventDefault();
-    console.log(store.page)
+    console.log(store.page);
     if (store.page === 'start') {
         store.page = 'coin';
     } else if (store.page === 'coin') {
@@ -148,15 +150,15 @@ $('body').on('click', '.submit', (event) => {
     render();
 });
 
-$(".form").submit(function (event) {
+$('.form').submit(function (event) {
 
     event.preventDefault();
     store.page = 'homepage';
 
     let $form = $(this),
-        amt = $form.find("input[name='investmentAmount']").val(),
-        bought = $form.find("input[name='Buy Price']").val(),
-        date = $form.find("input[name='date']").val(),
+        amt = $form.find('input[name=\'investmentAmount\']').val(),
+        bought = $form.find('input[name=\'Buy Price\']').val(),
+        date = $form.find('input[name=\'date\']').val(),
         postUrl = 'https://remorse.glitch.me/v3/investment';
 
     let posting = $.post(postUrl, {
