@@ -104,23 +104,23 @@ $('body').on('click', '#delete', (apiDelete) => {
         }
     });
 
-})
+});
 
 $('body').on('click', '#deleteAll', (apiDeleteall) => {
-    let deleteUrl = 'https://remorse.glitch.me/v3/investments'
+    let deleteUrl = 'https://remorse.glitch.me/v3/investments';
 
     $.ajax({
         url: deleteUrl,
         type: 'DELETE',
         success: function (result) {
             alert('All entries have been deleted');
-            $(".homepage").empty();
-            store.page = 'start'
+            $('.homepage').empty();
+            store.page = 'start';
             render();
         }
     });
 
-})
+});
 
 $('body').on('click', '.submit', (event) => {
     // event.preventDefault();
@@ -158,10 +158,10 @@ $('.form').submit(function (event) {
         postUrl = 'https://remorse.glitch.me/v3/investment';
 
     let posting = $.post(postUrl, {
-        "coinName": store.currentCoin,
-        "investmentAmount": amt,
-        "date": date,
-        "previousValue": bought
+        'coinName': store.currentCoin,
+        'investmentAmount': amt,
+        'date': date,
+        'previousValue': bought
     });
 
     posting.done(function (data) {
