@@ -202,18 +202,18 @@ $('.form').submit(function (event) {
         console.log(data);
     });
 
-    //render();
+    render();
     //when user added investments; they didnt see them on the screen till they went Back
     //& pressed homepage
-    let getUrl = 'https://remorse.glitch.me/v3/investments';
-    let getting = $.getJSON(getUrl, (data) => {
-        store.investments = data;
-    });
+    // let getUrl = 'https://remorse.glitch.me/v3/investments';
+    // let getting = $.getJSON(getUrl, (data) => {
+    //     store.investments = data;
+    // });
 
-    getting.done(function (data) {
-        $('.homepage').html(divCreator(data));
-        render();
-    });
+    // getting.done(function (data) {
+    //     $('.homepage').html(divCreator(data));
+    //     render();
+    // });
 
 
 });
