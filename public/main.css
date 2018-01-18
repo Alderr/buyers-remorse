@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    background-image: url("https://imgur.com/2LxZ74z.jpeg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body, select {
+    font-family: Arial, sans-serif;
+    font-weight: 400;
+    font-size: 13pt;
+    line-height: 1.5em;
+    color: rgba(255, 255, 255, 0.65); 
+    text-align: center;
+    
+}
+
+.html {
+    position: relative;
+}
+ 
+body {
+    width: 50%;
+    margin: 5em auto;
+}
+
+.coins:hover {
+    background-color: rgb(201, 221, 22);
+    color: black;
+}
+
+input[type=number], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid rgb(94, 91, 91);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit], button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+select {
+    color: black;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #043846;
+    padding: 20px;
+}
+
+.results {
+    overflow-y: scroll;
+    max-height: 50vh;
+}
