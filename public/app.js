@@ -167,7 +167,7 @@ $('body').on('click', '.submit', (event) => {
     }
     render();
 });
-
+//is for when a user adds a new investment
 $('.form').submit(function (event) {
 
     event.preventDefault();
@@ -189,5 +189,19 @@ $('.form').submit(function (event) {
     posting.done(function (data) {
         console.log(data);
     });
-    render();
+
+    //render();
+    //when user added investments; they didnt see them on the screen till they went Back
+    //& pressed homepage
+    let getUrl = 'https://remorse.glitch.me/v3/investments';
+    let getting = $.getJSON(getUrl, (data) => {
+        console.log(data);
+    });
+
+    getting.done(function (data) {
+        $('.homepage').html(divCreator(data));
+        render();
+    });
+
+
 });
