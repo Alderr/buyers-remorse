@@ -86,6 +86,7 @@ $('body').on('click', '#homepage', (apiGet) => {
 });
 
 $('body').on('click', '#delete', (apiDelete) => {
+
     var row = $(apiDelete.currentTarget).closest('div');
 
     let value = apiDelete.currentTarget.value.split(' ');
@@ -103,6 +104,27 @@ $('body').on('click', '#delete', (apiDelete) => {
             render();
         }
     });
+
+});
+
+$('body').on('click', '#update', (apiUpdate) => {
+
+    var row = $(apiUpdate.currentTarget).closest('div');
+
+    let value = apiUpdate.currentTarget.value.split(' ');
+
+    console.log(value);
+    console.log('Update handler worked.');
+    let updateUrl = `https://remorse.glitch.me/v3/investments/${value[0]}/${value[1]}`;
+
+    // $.ajax({
+    //     url: updateUrl,
+    //     type: 'PUT',
+    //     success: function (result) {
+    //         alert('This entry has been updated');
+    //         render();
+    //     }
+    // });
 
 });
 
@@ -155,7 +177,7 @@ $('.form').submit(function (event) {
         amt = $form.find('input[name=\'investmentAmount\']').val(),
         bought = $form.find('input[name=\'Buy Price\']').val(),
         date = $form.find('input[name=\'date\']').val(),
-        postUrl = 'https://remorse.glitch.me/v3/investment';
+        postUrl = 'https://remorse.glitch.me/v3/investments';
 
     let posting = $.post(postUrl, {
         'coinName': store.currentCoin,
