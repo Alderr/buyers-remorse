@@ -107,6 +107,27 @@ $('body').on('click', '#delete', (apiDelete) => {
 
 });
 
+$('body').on('click', '#update', (apiUpdate) => {
+
+    var row = $(apiUpdate.currentTarget).closest('div');
+
+    let value = apiUpdate.currentTarget.value.split(' ');
+
+    console.log(value);
+    console.log('Update handler worked.');
+    let updateUrl = `https://remorse.glitch.me/v3/investments/${value[0]}/${value[1]}`;
+
+    // $.ajax({
+    //     url: updateUrl,
+    //     type: 'PUT',
+    //     success: function (result) {
+    //         alert('This entry has been updated');
+    //         render();
+    //     }
+    // });
+
+});
+
 $('body').on('click', '#deleteAll', (apiDeleteall) => {
     let deleteUrl = 'https://remorse.glitch.me/v3/investments';
 
