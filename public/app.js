@@ -52,7 +52,7 @@ function divCreator(data) {
         let item = data[i];
         div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
     }
-    return div + '<br><button class="submit">Go Back</button>';
+    return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div + '<br><button class="submit">Go Back</button>';
 }
 
 $('.coin').on('click', 'div', function (event) {
@@ -89,9 +89,13 @@ $('body').on('click', '#homepage', (apiGet) => {
 
 $('body').on('click', '#delete', (apiDelete) => {
     var row = $(apiDelete.currentTarget).closest('div');
+
     let value = apiDelete.currentTarget.value.split(' ');
+
     console.log(value);
+
     let deleteUrl = `https://remorse.glitch.me/v3/investments/${value[0]}/${value[1]}`;
+
     $.ajax({
         url: deleteUrl,
         type: 'DELETE',
@@ -103,6 +107,23 @@ $('body').on('click', '#delete', (apiDelete) => {
     });
     
 })
+
+$('body').on('click', '#deleteAll', (apiDeleteall) => {
+    let deleteUrl = 'https://remorse.glitch.me/v3/investments'
+
+    $.ajax({
+        url: deleteUrl,
+        type: 'DELETE',
+        success: function(result) {
+        alert('All entries have been deleted');
+        $( ".homepage" ).empty();
+        store.page='start'
+        render();
+        }
+    });
+    
+})
+
 $('body').on('click', '.submit', (event) => {
     // event.preventDefault();
     console.log(store.page)
@@ -129,26 +150,24 @@ $('body').on('click', '.submit', (event) => {
 
 $(".form").submit(function (event) {
 
-    // Stop form from submitting normally
     event.preventDefault();
     store.page = 'homepage';
-    // Get some values from elements on the page:
+
     let $form = $(this),
         amt = $form.find("input[name='investmentAmount']").val(),
         bought = $form.find("input[name='Buy Price']").val(),
         date = $form.find("input[name='date']").val(),
         postUrl = 'https://remorse.glitch.me/v3/investment';
 
-    // let posting = $.post(postUrl, {
-    //     "coinName": store.currentCoin,
-    //     "investmentAmount": amt,
-    //     "date": date,
-    //     "previousValue": bought
-    // });
+    let posting = $.post(postUrl, {
+        "coinName": store.currentCoin,
+        "investmentAmount": amt,
+        "date": date,
+        "previousValue": bought
+    });
 
-    // Put the homepage in a div
-    // posting.done(function (data) {
-    //     console.log(data);
-    // });
+    posting.done(function (data) {
+        console.log(data);
+    });
     render();
 });
