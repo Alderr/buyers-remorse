@@ -47,7 +47,7 @@ function divCreator(data) {
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
 
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.coinName} ${item.id}">delete</button></div> <button id="update" value="${item.coinName} ${item.id}">update</button></div>`;
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.coinName} ${item.id}">delete</button><button id="update" value="${item.coinName} ${item.id}">update</button></div>`;
 
     }
     return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div + '<br><button class="submit">Go Back</button>';
