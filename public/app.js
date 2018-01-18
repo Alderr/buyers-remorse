@@ -50,7 +50,9 @@ function divCreator(data) {
     let div = '';
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.id}">delete</button><button id="update" value="${item.id} ${item.coinName}">update</button></div>`;
+
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="delete" value="${item.coinName} ${item.id}">delete</button></div> <button id="update" value="${item.coinName} ${item.id}">update</button></div>`;
+
     }
     return div + '<br><button class="submit">Go Back</button>';
 }
@@ -75,7 +77,7 @@ $('.coin').on('click', 'div', function (event) {
     }
 });
 
-$('body').on('click', '#homepage', (event) => {
+$('body').on('click', '#homepage', (apiGet) => {
     store.page = 'homepage';
     let getUrl = 'https://remorse.glitch.me/v3/investments';
     let getting = $.getJSON(getUrl, (data) => {
@@ -87,19 +89,23 @@ $('body').on('click', '#homepage', (event) => {
     render();
 });
 
-$('body').on('click', '#delete', (event) => {
-    let value = event.currentTarget.value;
+$('body').on('click', '#delete', (apiDelete) => {
+    var row = $(apiDelete.currentTarget).closest('div');
+    let value = apiDelete.currentTarget.value.split(' ');
     console.log(value);
-    let deleteUrl = `https://remorse.glitch.me/v3/investments/${value}`;
-    render();
-});
 
-$('body').on('click', '#update', (event) => {
-    let value = event.currentTarget.value.split(' ');
-    console.log(value);
-    let updateUrl = `https://remorse.glitch.me/v3/investments/${value[0]}/${value[1]}`;
-    render();
-});
+    let deleteUrl = `https://remorse.glitch.me/v3/investments/${value[0]}/${value[1]}`;
+    $.ajax({
+        url: deleteUrl,
+        type: 'DELETE',
+        success: function(result) {
+        alert('This entry has been deleted');
+        row.remove();
+        render();
+        }
+    });
+    
+})
 
 $('body').on('click', '.submit', (event) => {
     // event.preventDefault();
