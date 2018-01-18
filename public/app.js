@@ -6,11 +6,11 @@ const TOP_LEVEL_COMPONENTS = [
 
 let store = {
     page: 'start',
-    feedback: null,
     currentCoin: null,
     state: null, //add or update
     coinDate: null,
-    selectedCoinId: null
+    selectedCoin: null,
+    investments: null
 };
 
 function hideAll() {
@@ -51,6 +51,17 @@ function render() {
 
 }
 
+$('.homepage').on('click', 'option', function(event){
+    console.log('homepage!');
+    store.selectedCoin = event.currentTarget.value;
+    const filteredInvestments = store.investments.filter(investment => investment.coinName === store.selectedCoin);
+    if(store.selectedCoin === ''){
+        $('.results').html(divCreator(store.investments));
+    }else{
+        $('.results').html(divCreator(filteredInvestments));
+    }
+});
+
 function divCreator(data) {
 
     let div = '';
@@ -60,7 +71,7 @@ function divCreator(data) {
         div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
 
     }
-    return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div + '<br><button class="submit">Go Back</button>';
+    return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div;
 }
 
 $('.coin').on('click', 'div', function (event) {
@@ -93,7 +104,8 @@ $('body').on('click', '#homepage', (apiGet) => {
         console.log(data);
     });
     getting.done(function (data) {
-        $('.homepage').html(divCreator(data));
+        store.investments = data;
+        // $('.homepage').html(divCreator(data));
     });
     render();
 });
