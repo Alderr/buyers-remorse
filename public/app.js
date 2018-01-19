@@ -89,15 +89,19 @@ function divCreator(data) {
         totalXRPCash = 0,
         totalXRP = 0,
         totalXRPProfit = 0,
+        totalXRPPercentage = 0,
         totalBTCCash = 0,
         totalBTC = 0,
         totalBTCProfit = 0,
+        totalBTCPercentage = 0,
         totalBCHCash = 0,
         totalBCH = 0,
         totalBCHProfit = 0,
+        totalBCHPercentage = 0,
         totalETHCash = 0,
         totalETH = 0,
         totalETHProfit = 0,
+        totalETHPercentage = 0,
         totalProfit = 0;
 
     for (let i = 0; i < data.length; i++) {
@@ -111,6 +115,7 @@ function divCreator(data) {
             totalXRPCash += item.investmentAmount;
             totalXRP += item.coinAmount;
             totalXRPProfit += parseInt(item.investmentAmountNow);
+            totalXRPPercentage += parseInt(item.percentageChange)
             console.log('found xrp');
             console.log(item.coinAmount);
             console.log('total: ' + totalXRP);
@@ -118,6 +123,7 @@ function divCreator(data) {
             totalBTCCash += item.investmentAmount;
             totalBTC += item.coinAmount;
             totalBTCProfit += parseInt(item.investmentAmountNow);
+            totalBTCPercentage += parseInt(item.percentageChange)
             console.log('found btc');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
@@ -125,6 +131,7 @@ function divCreator(data) {
             totalBCHCash += item.investmentAmount;
             totalBCH += item.coinAmount;
             totalBCHProfit += parseInt(item.investmentAmountNow);
+            totalBCHPercentage += parseInt(item.percentageChange)
             console.log('found bch');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
@@ -132,6 +139,7 @@ function divCreator(data) {
             totalETHCash += item.investmentAmount;
             totalETH += item.coinAmount;
             totalETHProfit += parseInt(item.investmentAmountNow);
+            totalETHPercentage += parseInt(item.percentageChange)
             console.log('found eth');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
