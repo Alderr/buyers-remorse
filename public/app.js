@@ -85,11 +85,11 @@ $('.homepage').on('change', function(event){
 function divCreator(data) {
     console.log('divCreator!!');
     let div = '',
-        totalXRP = null,
-        totalBTC = null,
-        totalBCH = null,
-        totalETH = null,
-        totalProfit = null;
+        totalXRP = 0,
+        totalBTC = 0,
+        totalBCH = 0,
+        totalETH = 0,
+        totalProfit = 0;
 
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
@@ -129,6 +129,7 @@ function oldDivCreator(data) {
 
     return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div;
 }
+
 $('.coin').on('click', 'div', function (event) {
 
     store.state = 'add';
