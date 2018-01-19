@@ -102,7 +102,11 @@ function divCreator(data) {
         totalETH = 0,
         totalETHProfit = 0,
         totalETHInvested = 0,
-        totalProfit = 0;
+        totalProfit = 0,
+        totalXRPPercentage = 0,
+        totalBTCPercentage = 0,
+        totalBCHPercentage = 0,
+        totalETHPercentage = 0;
 
 
 
@@ -121,6 +125,7 @@ function divCreator(data) {
             totalXRPCash += gainLoss;
             totalXRP += item.coinAmount;
             totalXRPProfit += parseInt(item.investmentAmountNow);
+            totalXRPPercentage += parseInt(item.percentageChange)
             console.log('found xrp');
             console.log(item.coinAmount);
             console.log('total: ' + totalXRP);
@@ -129,6 +134,7 @@ function divCreator(data) {
             totalBTCCash += gainLoss;
             totalBTC += item.coinAmount;
             totalBTCProfit += parseInt(item.investmentAmountNow);
+            totalBTCPercentage += parseInt(item.percentageChange)
             console.log('found btc');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
@@ -137,6 +143,7 @@ function divCreator(data) {
             totalBCHCash += gainLoss;
             totalBCH += item.coinAmount;
             totalBCHProfit += parseInt(item.investmentAmountNow);
+            totalBCHPercentage += parseInt(item.percentageChange)
             console.log('found bch');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
@@ -145,6 +152,7 @@ function divCreator(data) {
             totalETHCash += gainLoss;
             totalETH += item.coinAmount;
             totalETHProfit += parseInt(item.investmentAmountNow);
+            totalETHPercentage += parseInt(item.percentageChange)
             console.log('found eth');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
