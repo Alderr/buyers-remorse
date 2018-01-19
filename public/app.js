@@ -42,6 +42,7 @@ function render() {
     }
 
     else if (store.page === 'homepage') {
+
         let getUrl = 'https://remorse.glitch.me/v3/investments';
 
         let getting = $.getJSON(getUrl, (data) => {
@@ -92,28 +93,66 @@ function divCreator(data) {
         totalProfit = 0;
 
     for (let i = 0; i < data.length; i++) {
+        console.log(i);
         let item = data[i];
         // console.log(item);
         div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}. Your profit/Loss if you sold now would be ${item.profit}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
         totalProfit += item.profit;
-        let filtered = data.filter(coin => {
-            // wtf is this???? Had to do it rushed
-            if(coin.coinName === 'XRP'){
-                totalXRP += coin.coinAmount;
-            }else if(coin.coinName === 'BTC'){
-                totalBTC += coin.coinAmount;
-            }else if(coin.coinName === 'BCH'){
-                totalBCH += coin.coinAmount;
-            }else if(coin.coinName === 'ETH'){
-                totalETH += coin.coinAmount;
-            }
-        });
+
+        if(item.coinName === 'XRP'){
+            totalXRP += item.coinAmount;
+            console.log('found xrp');
+            console.log(item.coinAmount);
+            console.log('total: ' + totalXRP);
+        }else if(item.coinName === 'BTC'){
+            totalBTC += item.coinAmount;
+            console.log('found btc');
+            console.log(item.coinAmount);
+            console.log('total: ' + totalETH);
+        }else if(item.coinName === 'BCH'){
+            totalBCH += item.coinAmount;
+            console.log('found bch');
+            console.log(item.coinAmount);
+            console.log('total: ' + totalETH);
+        }else if(item.coinName === 'ETH'){
+            totalETH += item.coinAmount;
+            console.log('found eth');
+            console.log(item.coinAmount);
+            console.log('total: ' + totalETH);
+        }
+
     }
     // bigger wtf... tofixed doesn't coerce can only store variable maybe store in array???
     let XRP = totalXRP.toFixed(2);
     let BTC = totalBTC.toFixed(2);
-    let BCH = totalBTC.toFixed(2);
-    let ETH = totalBTC.toFixed(2);
+    let BCH = totalBCH.toFixed(2);
+    let ETH = totalETH.toFixed(2);
+
+    if(store.selectedCoin === 'XRP')
+    {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+    }
+
+    else if(store.selectedCoin === 'BTC')
+    {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
+    }
+
+    else if(store.selectedCoin === 'BCH')
+    {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
+    }
+
+    else if(store.selectedCoin === 'ETH')
+    {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
+    }
+
+    else if(store.selectedCoin === '')
+    {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
+    }
+
     return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
 }
 
