@@ -86,9 +86,13 @@ $('.homepage').on('change', function(event){
 function divCreator(data) {
     console.log('divCreator!!');
     let div = '',
+        totalXRPCash = 0,
         totalXRP = 0,
+        totalBTCCash = 0,
         totalBTC = 0,
+        totalBCHCash = 0,
         totalBCH = 0,
+        totalETHCash = 0,
         totalETH = 0,
         totalProfit = 0;
 
@@ -100,21 +104,25 @@ function divCreator(data) {
         totalProfit += item.profit;
 
         if(item.coinName === 'XRP'){
+            totalXRPCash += item.investmentAmount;
             totalXRP += item.coinAmount;
             console.log('found xrp');
             console.log(item.coinAmount);
             console.log('total: ' + totalXRP);
         }else if(item.coinName === 'BTC'){
+            totalBTCCash += item.investmentAmount;
             totalBTC += item.coinAmount;
             console.log('found btc');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
         }else if(item.coinName === 'BCH'){
+            totalBCHCash += item.investmentAmount;
             totalBCH += item.coinAmount;
             console.log('found bch');
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
         }else if(item.coinName === 'ETH'){
+            totalETHCash += item.investmentAmount;
             totalETH += item.coinAmount;
             console.log('found eth');
             console.log(item.coinAmount);
@@ -130,22 +138,22 @@ function divCreator(data) {
 
     if(store.selectedCoin === 'XRP')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Investment:$${totalXRPCash}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
     }
 
     else if(store.selectedCoin === 'BTC')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Investment:$${totalBTCCash}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
     }
 
     else if(store.selectedCoin === 'BCH')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Investment:$${totalBCHCash}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
     }
 
     else if(store.selectedCoin === 'ETH')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Investment:$${totalETHCash}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
     }
 
     else if(store.selectedCoin === '')
