@@ -25,23 +25,17 @@ function render() {
         $('.coin').hide();
         $('.homepage').hide();
         $('.form').hide();
-    }
-
-    else if (store.page === 'coin') {
+    } else if (store.page === 'coin') {
         $('.start').hide();
         $('.homepage').hide();
         $('.coin').show();
         $('.form').hide();
-    }
-
-    else if (store.page === 'form') {
+    } else if (store.page === 'form') {
         $('.start').hide();
         $('.homepage').hide();
         $('.coin').hide();
         $('.form').show();
-    }
-
-    else if (store.page === 'homepage') {
+    } else if (store.page === 'homepage') {
 
         let getUrl = 'https://remorse.glitch.me/v3/investments';
 
@@ -51,12 +45,10 @@ function render() {
 
             const filteredInvestments = store.investments.filter(investment => investment.coinName === store.selectedCoin);
             console.log(store.selectedCoin);
-            if(store.selectedCoin === '' || store.selectedCoin === null) {
+            if (store.selectedCoin === '' || store.selectedCoin === null) {
                 console.log('selectedCoin is empty');
                 $('.results').html(divCreator(store.investments));
-            }
-
-            else {
+            } else {
                 $('.results').html(divCreator(filteredInvestments));
             }
 
@@ -73,9 +65,9 @@ function render() {
 
 }
 
-$('.homepage').on('change', function(event){
+$('.homepage').on('change', function (event) {
 
-    console.log('change event triggered!') ;
+    console.log('change event triggered!');
 
     store.page = 'homepage';
     store.selectedCoin = event.target.value;
@@ -108,76 +100,71 @@ function divCreator(data) {
         totalBCHPercentage = 0,
         totalETHPercentage = 0;
 
-
-
-
-
     for (let i = 0; i < data.length; i++) {
-        console.log(i);
+        // console.log(i);
         let item = data[i];
         // console.log(item);
         div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount.toFixed(2)} ${item.coinName}  on ${item.date.substring(0,10)}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
-        let gainLoss =parseInt(item.investmentAmountNow) - item.investmentAmount;
-        totalProfit += gainLoss
+        let gainLoss = parseInt(item.investmentAmountNow) - item.investmentAmount;
 
-        if(item.coinName === 'XRP'){
+        if (item.coinName === 'XRP') {
             totalXRPInvested += item.investmentAmount;
             totalXRPCash += gainLoss;
             totalXRP += item.coinAmount;
             totalXRPProfit += parseInt(item.investmentAmountNow);
             totalXRPPercentage += parseInt(item.percentageChange)
-            console.log('found xrp');
-            console.log(item.coinAmount);
-            console.log('total: ' + totalXRP);
-        }else if(item.coinName === 'BTC'){
+            // console.log('found xrp');
+            // console.log(item.coinAmount);
+            // console.log('total: ' + totalXRP);
+        } else if (item.coinName === 'BTC') {
             totalBTCInvested += item.investmentAmount;
             totalBTCCash += gainLoss;
             totalBTC += item.coinAmount;
             totalBTCProfit += parseInt(item.investmentAmountNow);
             totalBTCPercentage += parseInt(item.percentageChange)
-            console.log('found btc');
-            console.log(item.coinAmount);
-            console.log('total: ' + totalETH);
-        }else if(item.coinName === 'BCH'){
+            // console.log('found btc');
+            // console.log(item.coinAmount);
+            // console.log('total: ' + totalETH);
+        } else if (item.coinName === 'BCH') {
             totalBCHInvested += item.investmentAmount;
             totalBCHCash += gainLoss;
             totalBCH += item.coinAmount;
             totalBCHProfit += parseInt(item.investmentAmountNow);
             totalBCHPercentage += parseInt(item.percentageChange)
-            console.log('found bch');
-            console.log(item.coinAmount);
-            console.log('total: ' + totalETH);
-        }else if(item.coinName === 'ETH'){
+            // console.log('found bch');
+            // console.log(item.coinAmount);
+            // console.log('total: ' + totalETH);
+        } else if (item.coinName === 'ETH') {
             totalETHInvested += item.investmentAmount;
             totalETHCash += gainLoss;
             totalETH += item.coinAmount;
             totalETHProfit += parseInt(item.investmentAmountNow);
             totalETHPercentage += parseInt(item.percentageChange)
-            console.log('found eth');
-            console.log(item.coinAmount);
-            console.log('total: ' + totalETH);
+            // console.log('found eth');
+            // console.log(item.coinAmount);
+            // console.log('total: ' + totalETH);
         }
-
+        totalProfit += totalBCHProfit, totalETHProfit, totalBTCProfit, totalXRPProfit;
     }
-    
+
     let XRP = totalXRP.toFixed(2);
     let BTC = totalBTC.toFixed(2);
     let BCH = totalBCH.toFixed(2);
     let ETH = totalETH.toFixed(2);
 
-    if(store.selectedCoin === 'XRP'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit.toLocaleString()}</p> <p>Profit/Loss: $${totalXRPCash.toLocaleString()}   Total Investment: $${totalXRPInvested.toLocaleString()}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
-    }else if(store.selectedCoin === 'BTC'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBTCCash.toLocaleString()}   Total Investment: $ ${totalBTCInvested.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
-    }else if(store.selectedCoin === 'BCH'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBCHProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBCHCash.toLocaleString()}   Total Investment: $ ${totalBCHInvested.toLocaleString()}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
-    }else if(store.selectedCoin === 'ETH'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalETHProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalETHCash.toLocaleString()}   Total Investment: $ ${totalETHInvested.toLocaleString()}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
-    }else if(store.selectedCoin === ''){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
+    if (store.selectedCoin === 'XRP') {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' + `<p>Current Worth:$${totalXRPProfit.toLocaleString()}</p> <p>Profit/Loss: $${totalXRPCash.toLocaleString()}   Total Investment: $${totalXRPInvested.toLocaleString()}</p>` + `<p>Total XRP:${XRP}</p>` + div;
+    } else if (store.selectedCoin === 'BTC') {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' + `<p>Current Worth:$${totalBTCProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBTCCash.toLocaleString()}   Total Investment: $ ${totalBTCInvested.toLocaleString()}</p>` + `<p>Total BTC: ${BTC}</p>` + div;
+    } else if (store.selectedCoin === 'BCH') {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' + `<p>Current Worth:$${totalBCHProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBCHCash.toLocaleString()}   Total Investment: $ ${totalBCHInvested.toLocaleString()}</p>` + `<p>Total BCH:${BCH}</p>` + div;
+    } else if (store.selectedCoin === 'ETH') {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' + `<p>Current Worth:$${totalETHProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalETHCash.toLocaleString()}   Total Investment: $ ${totalETHInvested.toLocaleString()}</p>` + `<p>Total ETH:${ETH}</p>` + div;
+    } else if (store.selectedCoin === '') {
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' + `<p>Total Profit: $${totalProfit.toLocaleString()}</p>` + `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
     }
 
-    return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
+    return '<br><button id="deleteAll">Delete all entries</button><br><br>' + `<p>Total Profit: $${totalProfit.toLocaleString()}</p>` + `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
 }
 
 
@@ -190,21 +177,15 @@ $('.coin').on('click', 'div', function (event) {
         console.log('BTC');
         store.currentCoin = 'BTC';
         store.coinDate = '2009-01-09';
-    }
-
-    else if (event.target.attributes.name.nodeValue === 'BCH') {
+    } else if (event.target.attributes.name.nodeValue === 'BCH') {
         console.log('BCH');
         store.currentCoin = 'BCH';
         store.coinDate = '2017-08-01';
-    }
-
-    else if (event.target.attributes.name.nodeValue === 'ETH') {
+    } else if (event.target.attributes.name.nodeValue === 'ETH') {
         console.log('ETH');
         store.currentCoin = 'ETH';
         store.coinDate = '2015-07-30';
-    }
-
-    else if (event.target.attributes.name.nodeValue === 'XRP') {
+    } else if (event.target.attributes.name.nodeValue === 'XRP') {
         console.log('XRP');
         store.currentCoin = 'XRP';
         store.coinDate = '2017-04-14';
@@ -343,7 +324,7 @@ $('.form').submit(function (event) {
         date = $form.find('input[name=\'date\']').val();
 
 
-    if (store.state === 'add'){
+    if (store.state === 'add') {
 
         console.log('adding');
 
@@ -361,9 +342,7 @@ $('.form').submit(function (event) {
             render();
         });
 
-    }
-
-    else if (store.state === 'update') {
+    } else if (store.state === 'update') {
         console.log('false');
 
         let updateUrl = `https://remorse.glitch.me/v3/investments/${store.currentCoin}/${store.selectedCoinId}`;
@@ -376,7 +355,8 @@ $('.form').submit(function (event) {
                 'investmentAmount': amt,
                 'date': date,
                 'previousValue': bought
-            }});
+            }
+        });
 
         updating.done(function (data) {
             console.log(data);
@@ -384,7 +364,7 @@ $('.form').submit(function (event) {
 
         });
 
-        updating.fail( function (data) {
+        updating.fail(function (data) {
             console.log('updating fail!');
         });
 
