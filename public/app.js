@@ -116,7 +116,7 @@ function divCreator(data) {
         console.log(i);
         let item = data[i];
         // console.log(item);
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount.toFixed(2)} ${item.coinName}  on ${item.date.substring(0,10)}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
         let gainLoss =parseInt(item.investmentAmountNow) - item.investmentAmount;
         totalProfit += gainLoss
 
@@ -166,7 +166,7 @@ function divCreator(data) {
     let ETH = totalETH.toFixed(2);
 
     if(store.selectedCoin === 'XRP'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalXRPCash.toLocaleString()}   Total Investment: $ ${totalXRPInvested.toLocaleString()}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit.toLocaleString()}</p> <p>Profit/Loss: $${totalXRPCash.toLocaleString()}   Total Investment: $${totalXRPInvested.toLocaleString()}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
     }else if(store.selectedCoin === 'BTC'){
         return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBTCCash.toLocaleString()}   Total Investment: $ ${totalBTCInvested.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
     }else if(store.selectedCoin === 'BCH'){
@@ -180,18 +180,7 @@ function divCreator(data) {
     return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
 }
 
-function oldDivCreator(data) {
-    console.log('divCreator!!');
-    let div = '';
-    for (let i = 0; i < data.length; i++) {
-        let item = data[i];
-        console.log(item);
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
 
-    }
-
-    return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div;
-}
 
 $('.coin').on('click', 'div', function (event) {
 
@@ -290,12 +279,12 @@ $('body').on('click', '#update', (apiUpdate) => {
         `<form>
         Initial Investment:<br>
         <input type="number" name="investmentAmount" step='.01' required value=${investmentAmount}><br>
-        Value at time of purchase:<br>
+        Value of coin at time of purchase:<br>
         <input type="number" min="0" name="Buy Price" step='.01' required value=${previousValue}><br>
         Date:<br>
         <input type="date" name="date" min= ${store.coinDate} max=${moment().format('YYYY-MM-DD')} value=${date.substring(0,10)} required><br>
         <br>
-        <input class ="submit" type="submit" value="Add to your portfolio">
+        <input class ="submit" type="submit" value="Update your portfolio">
         </form> `);
 
     render();
