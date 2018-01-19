@@ -117,7 +117,7 @@ function divCreator(data) {
         let item = data[i];
         // console.log(item);
         div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
-        let gainLoss = item.investmentAmount - parseInt(item.investmentAmountNow);
+        let gainLoss =parseInt(item.investmentAmountNow) - item.investmentAmount;
         totalProfit += gainLoss
 
         if(item.coinName === 'XRP'){
