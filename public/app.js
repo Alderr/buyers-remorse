@@ -106,6 +106,8 @@ function divCreator(data) {
 
 
 
+
+
     for (let i = 0; i < data.length; i++) {
         console.log(i);
         let item = data[i];
@@ -149,25 +151,25 @@ function divCreator(data) {
         }
 
     }
-
+    
     let XRP = totalXRP.toFixed(2);
     let BTC = totalBTC.toFixed(2);
     let BCH = totalBCH.toFixed(2);
     let ETH = totalETH.toFixed(2);
 
     if(store.selectedCoin === 'XRP'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit}</p> <p>Profit/Loss: $ ${totalXRPCash}   Total Investment: $ ${totalXRPInvested}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalXRPCash.toLocaleString()}   Total Investment: $ ${totalXRPInvested.toLocaleString()}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
     }else if(store.selectedCoin === 'BTC'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit}</p> <p>Profit/Loss: $ ${totalBTCCash}   Total Investment: $ ${totalBTCInvested}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBTCCash.toLocaleString()}   Total Investment: $ ${totalBTCInvested.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
     }else if(store.selectedCoin === 'BCH'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBCHProfit}</p> <p>Profit/Loss: $ ${totalBCHCash}   Total Investment: $ ${totalBCHInvested}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBCHProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalBCHCash.toLocaleString()}   Total Investment: $ ${totalBCHInvested.toLocaleString()}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
     }else if(store.selectedCoin === 'ETH'){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalETHProfit}</p> <p>Profit/Loss: $ ${totalETHCash}   Total Investment: $ ${totalETHInvested}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalETHProfit.toLocaleString()}</p> <p>Profit/Loss: $ ${totalETHCash.toLocaleString()}   Total Investment: $ ${totalETHInvested.toLocaleString()}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
     }else if(store.selectedCoin === ''){
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
     }
 
-    return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
+    return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit.toLocaleString()}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
 }
 
 function oldDivCreator(data) {
