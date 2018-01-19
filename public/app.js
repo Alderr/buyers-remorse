@@ -146,22 +146,22 @@ function divCreator(data) {
 
     if(store.selectedCoin === 'XRP')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Funds:$${totalXRPProfit}</p> <p>Investment:$${totalXRPCash}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit}</p> <p>Investment:$${totalXRPCash}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
     }
 
     else if(store.selectedCoin === 'BTC')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Funds:$${totalBTCProfit}</p> <p>Investment:$${totalBTCCash}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit}</p> <p>Investment:$${totalBTCCash}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
     }
 
     else if(store.selectedCoin === 'BCH')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Funds:$${totalBCHProfit}</p> <p>Investment:$${totalBCHCash}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBCHProfit}</p> <p>Investment:$${totalBCHCash}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
     }
 
     else if(store.selectedCoin === 'ETH')
     {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Funds:$${totalETHProfit}</p> <p>Investment:$${totalETHCash}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalETHProfit}</p> <p>Investment:$${totalETHCash}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
     }
 
     else if(store.selectedCoin === '')
