@@ -89,30 +89,38 @@ function divCreator(data) {
         totalXRPCash = 0,
         totalXRP = 0,
         totalXRPProfit = 0,
-        totalXRPPercentage = 0,
+        totalXRPInvested = 0,
         totalBTCCash = 0,
         totalBTC = 0,
         totalBTCProfit = 0,
-        totalBTCPercentage = 0,
+        totalBTCInvested = 0,
         totalBCHCash = 0,
         totalBCH = 0,
         totalBCHProfit = 0,
-        totalBCHPercentage = 0,
+        totalBCHInvested = 0,
         totalETHCash = 0,
         totalETH = 0,
         totalETHProfit = 0,
-        totalETHPercentage = 0,
-        totalProfit = 0;
+        totalETHInvested = 0,
+        totalProfit = 0,
+        totalXRPPercentage = 0,
+        totalBTCPercentage = 0,
+        totalBCHPercentage = 0,
+        totalETHPercentage = 0;
+
+
 
     for (let i = 0; i < data.length; i++) {
         console.log(i);
         let item = data[i];
         // console.log(item);
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}. Your profit/Loss if you sold now would be ${item.profit}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
-        totalProfit += item.profit;
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
+        let gainLoss = item.investmentAmount - parseInt(item.investmentAmountNow);
+        totalProfit += gainLoss
 
         if(item.coinName === 'XRP'){
-            totalXRPCash += item.investmentAmount;
+            totalXRPInvested += item.investmentAmount;
+            totalXRPCash += gainLoss;
             totalXRP += item.coinAmount;
             totalXRPProfit += parseInt(item.investmentAmountNow);
             totalXRPPercentage += parseInt(item.percentageChange)
@@ -120,7 +128,8 @@ function divCreator(data) {
             console.log(item.coinAmount);
             console.log('total: ' + totalXRP);
         }else if(item.coinName === 'BTC'){
-            totalBTCCash += item.investmentAmount;
+            totalBTCInvested += item.investmentAmount;
+            totalBTCCash += gainLoss;
             totalBTC += item.coinAmount;
             totalBTCProfit += parseInt(item.investmentAmountNow);
             totalBTCPercentage += parseInt(item.percentageChange)
@@ -128,7 +137,8 @@ function divCreator(data) {
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
         }else if(item.coinName === 'BCH'){
-            totalBCHCash += item.investmentAmount;
+            totalBCHInvested += item.investmentAmount;
+            totalBCHCash += gainLoss;
             totalBCH += item.coinAmount;
             totalBCHProfit += parseInt(item.investmentAmountNow);
             totalBCHPercentage += parseInt(item.percentageChange)
@@ -136,7 +146,8 @@ function divCreator(data) {
             console.log(item.coinAmount);
             console.log('total: ' + totalETH);
         }else if(item.coinName === 'ETH'){
-            totalETHCash += item.investmentAmount;
+            totalETHInvested += item.investmentAmount;
+            totalETHCash += gainLoss;
             totalETH += item.coinAmount;
             totalETHProfit += parseInt(item.investmentAmountNow);
             totalETHPercentage += parseInt(item.percentageChange)
@@ -146,38 +157,25 @@ function divCreator(data) {
         }
 
     }
-    // bigger wtf... tofixed doesn't coerce can only store variable maybe store in array???
+
     let XRP = totalXRP.toFixed(2);
     let BTC = totalBTC.toFixed(2);
     let BCH = totalBCH.toFixed(2);
     let ETH = totalETH.toFixed(2);
 
-    if(store.selectedCoin === 'XRP')
-    {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit}</p> <p>Investment:$${totalXRPCash}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+    if(store.selectedCoin === 'XRP'){
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalXRPProfit}</p> <p>Profit/Loss: $ ${totalXRPCash}   Total Investment: $ ${totalXRPInvested}</p>` +  `<p>Total XRP:${XRP}</p>` + div;
+    }else if(store.selectedCoin === 'BTC'){
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit}</p> <p>Profit/Loss: $ ${totalBTCCash}   Total Investment: $ ${totalBTCInvested}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
+    }else if(store.selectedCoin === 'BCH'){
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBCHProfit}</p> <p>Profit/Loss: $ ${totalBCHCash}   Total Investment: $ ${totalBCHInvested}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
+    }else if(store.selectedCoin === 'ETH'){
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalETHProfit}</p> <p>Profit/Loss: $ ${totalETHCash}   Total Investment: $ ${totalETHInvested}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
+    }else if(store.selectedCoin === ''){
+        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
     }
 
-    else if(store.selectedCoin === 'BTC')
-    {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBTCProfit}</p> <p>Investment:$${totalBTCCash}</p>` +  `<p>Total BTC: ${BTC}</p>` + div;
-    }
-
-    else if(store.selectedCoin === 'BCH')
-    {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalBCHProfit}</p> <p>Investment:$${totalBCHCash}</p>` +  `<p>Total BCH:${BCH}</p>` + div;
-    }
-
-    else if(store.selectedCoin === 'ETH')
-    {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Current Worth:$${totalETHProfit}</p> <p>Investment:$${totalETHCash}</p>` +  `<p>Total ETH:${ETH}</p>` + div;
-    }
-
-    else if(store.selectedCoin === '')
-    {
-        return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
-    }
-
-    return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
+    return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit: $${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
 }
 
 function oldDivCreator(data) {
