@@ -84,15 +84,37 @@ $('.homepage').on('change', function(event){
 
 function divCreator(data) {
     console.log('divCreator!!');
-    let div = '';
+    let div = '',
+    totalXRP = null,
+    totalBTC = null,
+    totalBCH = null,
+    totalETH = null,
+    totalProfit = null
+
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
-        console.log(item);
-        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
-
+        // console.log(item);
+        div += `<div>You Invested:$${item.investmentAmount} in ${item.coinAmount} ${item.coinName}  on ${item.date}<button id="update" value="${item.coinName} ${item.id} ${item.investmentAmount} ${item.previousValue} ${item.date}. Your profit/Loss if you sold now would be ${item.profit}">update</button><button id="delete" value="${item.coinName} ${item.id}">delete</button></div>`;
+        totalProfit += item.profit;
+        let filtered = data.filter(coin => {
+            // wtf is this???? Had to do it rushed 
+        if(coin.coinName === 'XRP'){
+            totalXRP += coin.coinAmount;
+        }else if(coin.coinName === 'BTC'){
+            totalBTC += coin.coinAmount;
+        }else if(coin.coinName === 'BCH'){
+            totalBCH += coin.coinAmount;
+        }else if(coin.coinName === 'ETH'){
+            totalETH += coin.coinAmount;
+        }
+        });
     }
-
-    return '<br><button id="deleteAll">Delete all entries</button><br><br>' + div;
+    // bigger wtf... tofixed doesn't coerce can only store variable maybe store in array???
+    let XRP = totalXRP.toFixed(2)
+    let BTC = totalBTC.toFixed(2);
+    let BCH = totalBTC.toFixed(2);
+    let ETH = totalBTC.toFixed(2);
+    return '<br><button id="deleteAll">Delete all entries</button><br><br>' +`<p>Total Profit:${totalProfit}</p>` +  `<p>Total BTC: ${BTC}  Total ETH:${ETH}   Total BCH:${BCH}   Total XRP:${XRP}</p>` + div;
 }
 
 $('.coin').on('click', 'div', function (event) {

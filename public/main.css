@@ -74,3 +74,8 @@ div {
     overflow-y: scroll;
     max-height: 50vh;
 }
+
+p {
+    color: rgb(9, 194, 18);
+    font-size: 15px;
+}
